@@ -12,7 +12,8 @@ java_import 'android.graphics.Color'
 java_import 'android.graphics.PorterDuffColorFilter'
 java_import 'android.graphics.PorterDuff'
 java_import 'android.graphics.Paint'
-
+java_import 'android.content.DialogInterface'
+#java_import 'android.content.DialogInterface.OnClickListener'
 
 
 # read data - ulozi do @todo
@@ -46,8 +47,12 @@ class ATodoTxtActivity
 
     @choose_priority = proc do |priority_button|
       Log.e "button", priority_button.get_parent.inspect
-      x = PriorityDialogFragment.new.show
-      Log.e "result", x.inspect
+      builder = AlertDialog::Builder.new self
+      builder.set_title("Choose priority")
+      builder.set_items(%w(A B C D E), DialogInterface::OnClickListener.new)
+      builder.create
+      builder.show
+      #Log.e "result", x.inspect
     end
 
     load_file = proc do |button|
